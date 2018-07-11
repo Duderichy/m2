@@ -90,8 +90,12 @@ int main (int argc, char **argv)
         printf ("%.3f   %.3f     % f  %f     % f  %f\n", t, h, mav, 
         xi, eav, cv);
 
+        printf("t: %f, cv: %f; step: %d\n", t, cv, step);
+
         temp_array[step] = t;
         data_array[step] = cv;
+
+        printf("t: %f, cv: %f; step: %d\n", temp_array[step], data_array[step], step);
 
         printf("t_before: %f\n", t);
         t = (final_temp - start_temp) / (double) step_final + t;
