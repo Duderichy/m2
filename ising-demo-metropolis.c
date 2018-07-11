@@ -11,50 +11,53 @@ int main (int argc, char **argv)
 {
     struct ising model;
 
-    int steps = 30;
-    int start_temp = 2;
-    int final_temp = 5;
+    int step_final = 30;
+    double start_temp = 2.0;
+    double final_temp = 5.0;
+
+    double temp_array[step_final];
+    double data_array[step_final];
 
     for (int step = 0; step < step_final; step++)
     {
 
-    double t = 2.;                   // temperature (kT)
-    double h = 0.;                   // magnetic field
-    double j = 1.;                   // ferromagnetic coupling
+        double t = start_temp + (final_temp - start_temp) / (double) step_final * (double) step;                  // temperature (kT)
+        double h = 0.;                   // magnetic field
+        double j = 1.;                   // ferromagnetic coupling
 
-    int lx = 32;
-    int ly = lx;
+        int lx = 32;
+        int ly = lx;
 
-    int mcsteps = 1024 * 128;        // 2^{17}
+        int mcsteps = 1024 * 128;        // 2^{17}
 
-    if( ising_init (&model, lx, ly, j, h, t) != 0)
-    {
+        if( ising_init (&model, lx, ly, j, h, t) != 0)
+        {
         fprintf(stderr, "%s - cannot allocate spin array\n", argv[0]);
         argc = 1;
         exit(1);
-    }
+        }
 
-    print_header (&model, stderr);
+        print_header (&model, stderr);
 
-    int therm_steps = mcsteps / 4;
-    int report = therm_steps / 32;
+        int therm_steps = mcsteps / 4;
+        int report = therm_steps / 32;
 
-    for (int s = 1; s <= therm_steps; s++)
-    {
+        for (int s = 1; s <= therm_steps; s++)
+        {
         (void) one_metropolis_step_per_spin (&model);
         if (s % report == 0)
         {
             text_progress_bar (s, therm_steps, 32, "Thermalization", stderr);
         }
-    }
-    fprintf (stderr, " Done\n");
+        }
+        fprintf (stderr, " Done\n");
 
-    report = mcsteps / 32;
-    double mav = 0., m2av = 0., eav = 0., e2av = 0.;
-    double cv, xi;
+        report = mcsteps / 32;
+        double mav = 0., m2av = 0., eav = 0., e2av = 0.;
+        double cv, xi;
 
-    for (int s = 1; s <= mcsteps; s++)
-    {
+        for (int s = 1; s <= mcsteps; s++)
+        {
         (void) one_metropolis_step_per_spin (&model);
         double m = magnetization_per_spin (&model);
         double e = energy_per_spin (&model);
@@ -69,21 +72,21 @@ int main (int argc, char **argv)
             text_progress_bar (s, mcsteps, 32, "Production", stderr);
         }
 
-    }
-    fprintf (stderr, " Done\n\n");
+        }
+        fprintf (stderr, " Done\n\n");
 
-    mav /= mcsteps;
-    eav /= mcsteps;
-    m2av /= mcsteps;
-    e2av /= mcsteps;
+        mav /= mcsteps;
+        eav /= mcsteps;
+        m2av /= mcsteps;
+        e2av /= mcsteps;
 
-    // specific heat dE/dt
-    cv = (e2av - eav*eav)/(t*t); 
+        // specific heat dE/dt
+        cv = (e2av - eav*eav)/(t*t); 
 
-    // magnetic susceptibility
-    xi = (m2av - mav*mav)/t;
+        // magnetic susceptibility
+        xi = (m2av - mav*mav)/t;
 
-    printf ("%.3f   %.3f     % f  %f     % f  %f\n", t, h, mav, 
+        printf ("%.3f   %.3f     % f  %f     % f  %f\n", t, h, mav, 
         xi, eav, cv);
     }
 
