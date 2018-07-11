@@ -11,6 +11,13 @@ int main (int argc, char **argv)
 {
     struct ising model;
 
+    int steps = 30;
+    int start_temp = 2;
+    int final_temp = 5;
+
+    for (int step = 0; step < step_final; step++)
+    {
+
     double t = 2.;                   // temperature (kT)
     double h = 0.;                   // magnetic field
     double j = 1.;                   // ferromagnetic coupling
@@ -78,6 +85,7 @@ int main (int argc, char **argv)
 
     printf ("%.3f   %.3f     % f  %f     % f  %f\n", t, h, mav, 
         xi, eav, cv);
+    }
 
     ising_free (model); 
 
