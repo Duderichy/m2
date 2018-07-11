@@ -11,9 +11,9 @@ int main (int argc, char **argv)
 {
     struct ising model;
 
-    int step_final = 30;
-    double start_temp = 2.0;
-    double final_temp = 5.0;
+    int step_final = 5;
+    double start_temp = 3.0;
+    double final_temp = 4.0;
 
     double temp_array[step_final];
     double data_array[step_final];
@@ -88,7 +88,19 @@ int main (int argc, char **argv)
 
         printf ("%.3f   %.3f     % f  %f     % f  %f\n", t, h, mav, 
         xi, eav, cv);
+
+        temp_array[step] = t;
+        data_array[step] = cv;
     }
+
+    for (int step = 0; step < step_final; step++)
+    {
+
+        printf("%f, %f\n", temp_array[step], data_array[step]);
+
+    }
+
+    plot(temp_array, data_array, step_final);
 
     ising_free (model); 
 
