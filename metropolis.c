@@ -29,11 +29,11 @@ int metropolis_step (struct ising *model)
     int jnext = (j == ly - 1) ? 0 : j + 1;
 
     // find sum of neighbor spins
-    int sum_neighbors = s[iprev][j] + s[inext][j] + s[i][jprev] + s[i][jnext];
+    int sum_neighbors = s[iprev][j] + s[inext][j] + s[i][jprev] + s[i][jnext] + s[inext][jprev] + s[iprev][jnext];
     int delta_ss = 2 * s[i][j] * sum_neighbors;
 
     // ratio of Boltzmann factors
-    double ratio = model->w[delta_ss + 8][1 + s[i][j]];
+    double ratio = model->w[delta_ss + 12][1 + s[i][j]];
 
     if (gsl_rng_uniform(r) < ratio)
     {

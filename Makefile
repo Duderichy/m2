@@ -32,7 +32,7 @@ LDLIBS    = $(shell gsl-config --libs)
 
 all: ising-demo-metropolis
 
-OBJSM = ising-demo-metropolis.o ising.o metropolis.o matrixmem.o progressbar.o
+OBJSM = ising-demo-metropolis.o ising.o metropolis.o matrixmem.o progressbar.o plot_fun.o
 SRCSM = $(OBJSM:.o=.c)
 HDRSM = $(OBJSM:.o=.h)
 DEPSM = $(OBJSM:.o=.d)

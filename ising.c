@@ -17,10 +17,10 @@ void precompute_boltzmann_factors (struct ising *model)
     double t = model->T;
     double j = model->J;
     double h = model->H;
-    for (int i = -8; i <= 8; i += 4)
+    for (int i = -12; i <= 12; i += 4)
     {
-        model->w[i + 8][0] = exp (-(i * j + 2 * h) / t);
-        model->w[i + 8][2] = exp (-(i * j - 2 * h) / t);
+        model->w[i + 12][0] = exp (-(i * j + 2 * h) / t);
+        model->w[i + 12][2] = exp (-(i * j - 2 * h) / t);
     }
 }
 
@@ -115,7 +115,12 @@ double energy_per_spin (struct ising *model)
             int inext = (i == lx - 1) ? 0 : i + 1;
             int jnext = (j == ly - 1) ? 0 : j + 1;
 
-            ssum += s[i][j] * (s[inext][j] + s[i][jnext]);
+            // ssum += s[i][j] * (s[inext][j] + s[i][jnext]);
+            int djnext = (j == ly - 1) ? 0 : j + 1;
+            int dinext = (i == 0) ? lx - 1 : i - 1;
+
+            ssum += s[i][j] * (s[inext][j] + s[i][jnext] + s[dinext][djnext]);
+
         }
     }
     return -(model->J * ssum + model->H * sum) / model->N;

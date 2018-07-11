@@ -6,19 +6,20 @@
 #include "metropolis.h"
 #include "progressbar.h"
 #include "ising-demo-metropolis.h"
+#include "plot_fun.h"
 
 int main (int argc, char **argv)
 {
     struct ising model;
 
-    int step_final = 5;
+    int step_final = 20;
     double start_temp = 3.0;
     double final_temp = 4.0;
 
     double temp_array[step_final];
     double data_array[step_final];
 
-    for (int step = 0; step < step_final; step++)
+    for (int step = 0; step <= step_final; step++)
     {
 
         double t = start_temp + (final_temp - start_temp) / (double) step_final * (double) step;                  // temperature (kT)
@@ -91,6 +92,12 @@ int main (int argc, char **argv)
 
         temp_array[step] = t;
         data_array[step] = cv;
+
+        printf("t_before: %f\n", t);
+        t = (final_temp - start_temp) / (double) step_final + t;
+        printf("t_after: %f\n", t);
+
+        ising_reinit(&model, h, t);
     }
 
     for (int step = 0; step < step_final; step++)
