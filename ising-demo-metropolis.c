@@ -8,21 +8,22 @@
 #include "ising-demo-metropolis.h"
 #include "plot_fun.h"
 
+#define STEP_FINAL 10
+
 int main (int argc, char **argv)
 {
     struct ising model;
 
-    int step_final = 20;
     double start_temp = 3.0;
     double final_temp = 4.0;
 
-    double temp_array[step_final];
-    double data_array[step_final];
+    double temp_array[STEP_FINAL + 2];
+    double data_array[STEP_FINAL + 2];
 
-    for (int step = 0; step <= step_final; step++)
+    for (int step = 0; step <= STEP_FINAL; step++)
     {
 
-        double t = start_temp + (final_temp - start_temp) / (double) step_final * (double) step;                  // temperature (kT)
+        double t = start_temp + (final_temp - start_temp) / (double) STEP_FINAL * (double) step;                  // temperature (kT)
         double h = 0.;                   // magnetic field
         double j = 1.;                   // ferromagnetic coupling
 
@@ -98,20 +99,20 @@ int main (int argc, char **argv)
         printf("t: %f, cv: %f; step: %d\n", temp_array[step], data_array[step], step);
 
         printf("t_before: %f\n", t);
-        t = (final_temp - start_temp) / (double) step_final + t;
+        t = (final_temp - start_temp) / (double) STEP_FINAL + t;
         printf("t_after: %f\n", t);
 
         ising_reinit(&model, h, t);
     }
 
-    for (int step = 0; step < step_final; step++)
+    for (int step = 0; step <= STEP_FINAL + 2; step++)
     {
 
-        printf("%f, %f\n", temp_array[step], data_array[step]);
+        printf("%f, %f, %d\n", temp_array[step], data_array[step], step);
 
     }
 
-    plot(temp_array, data_array, step_final);
+    plot(temp_array, data_array, STEP_FINAL + 1);
 
     ising_free (model); 
 
