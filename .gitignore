@@ -11,3 +11,4 @@ plot_fun.c
 progressbar.c
 res
 *.pdf
+!*.md

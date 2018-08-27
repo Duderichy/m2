@@ -12,6 +12,7 @@
 #include "ising.h"
 #include "matrixmem.h"
 
+// computes boltzmann factors
 void precompute_boltzmann_factors (struct ising *model)
 {
     double t = model->T;
@@ -50,6 +51,7 @@ int ising_init (struct ising *model, int lx, int ly, double jc, double h, double
         return -1;
     }
 
+    // fill in model with appropriate starting conditions
     model->s = s;
     for (int i = 0; i < lx; i++)
     {
@@ -65,6 +67,7 @@ int ising_init (struct ising *model, int lx, int ly, double jc, double h, double
     return 0;
 }
 
+// reinitializes ising model with starting conditions
 void ising_reinit (struct ising *model, double h, double t)
 {
     model->T = t;                // temperature
@@ -73,6 +76,7 @@ void ising_reinit (struct ising *model, double h, double t)
     precompute_boltzmann_factors (model);
 }
 
+// frees ising model memory back from program
 void ising_free (struct ising model)
 {
     if (model.cluster != NULL)

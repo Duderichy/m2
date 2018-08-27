@@ -1,6 +1,7 @@
 
 #include <gsl/gsl_rng.h>
 
+// ising datastructure
 struct ising
 {
     int Lx;                     // number of spins in x direction 

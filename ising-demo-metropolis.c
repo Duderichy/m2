@@ -20,6 +20,7 @@ int main (int argc, char **argv)
     double temp_array[STEP_FINAL + 2];
     double data_array[STEP_FINAL + 2];
 
+    // loops through multiple trials of ising model/simulation with different initial conditions
     for (int step = 0; step <= STEP_FINAL; step++)
     {
 

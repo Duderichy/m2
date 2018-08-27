@@ -8,6 +8,7 @@
 
 #include "matrixmem.h"
 
+// allocates grid, used for ising model
 int **matrix_allocate_int (int lx, int ly)
 {
     int **s = (int **) malloc((unsigned long) lx * sizeof(int *));
@@ -29,6 +30,7 @@ int **matrix_allocate_int (int lx, int ly)
     return s;
 }
 
+// frees matrix from program memory
 void matrix_free (int **s)
 {
     free (s[0]);

@@ -1,5 +1,5 @@
 /*
- * Metropolis algorithm for Ising model in two dimensions, on a rectangular grid, 
+ * Metropolis algorithm for Ising model in two dimensions, on a triangular grid, 
  * with periodic boundary conditions
  *
  * Inspired by: http://www.physics.buffalo.edu/phy411-506-2004/Topic3/topic3-lec3.pdf
