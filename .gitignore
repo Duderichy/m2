@@ -1,1 +1,13 @@
 .ising-demo-metropolis.c.swp
+*
+!*.c
+ising.c
+ising_datastructure.h
+ising-demo-metropolis.c
+Makefile
+matrixmem.c
+metropolis.c
+plot_fun.c
+progressbar.c
+res
+*.pdf
